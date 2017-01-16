@@ -9,6 +9,7 @@ import (
 func main(){
     router := httprouter.New()
     router.Handle("GET","/",HandleHome)
+    router.Handle("GET","/register",HandleUserNew)
     router.ServeFiles("/assets/*filepath",http.Dir("assets/"))
 
     middleware := Middleware{}

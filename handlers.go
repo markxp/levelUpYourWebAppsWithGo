@@ -18,8 +18,8 @@ func HandleHome(w http.ResponseWriter, r *http.Request, params httprouter.Params
 
 func HandleUserNew(w http.ResponseWriter, 
     r *http.Request, 
-    params httprouter.Params){
-        //RenderTemplate(w,r,"user/new",nil)
+    _ httprouter.Params){
+        RenderTemplate(w,r,"user/new",nil)
 }
 
 func HandleImageNew(w http.ResponseWriter,
