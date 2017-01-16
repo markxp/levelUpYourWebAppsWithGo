@@ -7,18 +7,12 @@ import (
 )
 
 func main(){
-
-    unauthenticatedRouter := httprouter.New()
-    unauthenticatedRouter.GET("/", HandleHome)
-
-    authenticatedRouter := httprouter.New()
-    authenticatedRouter.GET("/images/new", HandleImageNew)
+    router := httprouter.New()
+    router.Handle("GET","/",HandleHome)
+    router.ServeFiles("/assets/*filepath",http.Dir("assets/"))
 
     middleware := Middleware{}
-    middleware.Add(unauthenticatedRouter).
-        Add(http.HandlerFunc(AuthenticateRequest)).
-        Add(authenticatedRouter)
-
+    middleware.Add(router)
 
     log.Fatal(http.ListenAndServe(":3000",middleware))
 }
