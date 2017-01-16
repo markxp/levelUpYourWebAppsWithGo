@@ -3,15 +3,23 @@ package main
 import (
     "net/http"
     "log"
+    "github.com/julienschmidt/httprouter"
 )
 
 func main(){
-    mux := http.NewServeMux()
-    mux.Handle("/assets/",http.StripPrefix("/assets/",http.FileServer(http.Dir("assets/"))))
-    mux.HandleFunc("/",homeRender)
-    log.Fatal(http.ListenAndServe(":3000",mux))
+
+    unauthenticatedRouter := httprouter.New()
+    unauthenticatedRouter.GET("/", HandleHome)
+
+    authenticatedRouter := httprouter.New()
+    authenticatedRouter.GET("/images/new", HandleImageNew)
+
+    middleware := Middleware{}
+    middleware.Add(unauthenticatedRouter).
+        Add(http.HandlerFunc(AuthenticateRequest)).
+        Add(authenticatedRouter)
+
+
+    log.Fatal(http.ListenAndServe(":3000",middleware))
 }
 
-func homeRender(w http.ResponseWriter, req *http.Request){
-    RenderTemplate(w, req, "index/home",nil)
-}
