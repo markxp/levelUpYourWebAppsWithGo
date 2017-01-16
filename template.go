@@ -1,7 +1,9 @@
 package main
 
 import (
+    "net/http"
     "html/template"
+    "fmt"
 )
 
 var templates = template.Must(template.New("t").ParseGlob("templates/**/*.html"))
