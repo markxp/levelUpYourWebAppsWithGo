@@ -17,11 +17,11 @@ func (m *Middleware)Add(handler http.Handler) ( *Middleware){
 func (m Middleware)ServeHTTP(w http.ResponseWriter, r *http.Request){
     mw := NewMiddlewareResponseWriter(w)
     for _,handler := range m {
+        // write to mw
+        handler.ServeHTTP(mw,r)
         if mw.written {
             return
         }
-        // write to mw
-        handler.ServeHTTP(mw,r)
     }
     http.NotFound(w,r)
 }
