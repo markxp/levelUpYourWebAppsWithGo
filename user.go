@@ -16,9 +16,9 @@ const (
 )
 
 func NewUser(username, email, password string) (User, error){
-    user := User {
-        Email := email,
-        Username := username
+    user := User{
+        Email: email,
+        Username: username,
     }
     if username == "" {
         return user, errNoUsername
