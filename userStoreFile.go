@@ -81,7 +81,8 @@ func NewFileUserStore(filename string) (*FileUserStore,error){
         }
         return nil, err
     }
-    err = json.Unmarshal(contents, f)
+    // load file contents and transform into FileUserStore
+    err = json.Unmarshal(contents, f) // strange, why not unmarshal to f.Users??
     if err != nil {
         return nil, err
     }
