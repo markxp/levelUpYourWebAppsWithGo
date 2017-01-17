@@ -6,7 +6,7 @@ type ValidationError error
 
 var (
     errNoUsername       = ValidationError(errors.New("You must supply a username"))
-    errNoEmail          = ValidationError(errors.New("Your must supply an E-mail address"))
+    errNoEmail          = ValidationError(errors.New("You must supply an E-mail address"))
     errNoPassword       = ValidationError(errors.New("You must supply a password"))
     errPasswardTooShort = ValidationError(errors.New("Your password is too short"))
     errUsernameExists   = ValidationError(errors.New("The username is taken"))
