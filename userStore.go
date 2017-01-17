@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 // UserStore interface grants storage flexibility.
 type UserStore interface {
     Find(string) (*User, error)
