@@ -37,16 +37,17 @@ func NewUser(username, email, password string) (User, error){
     if err != nil {
         return user, err
     } else if existingUser != nil {
-        return existingUser, errUsernameExists
+        return user, errUsernameExists
     }
 
-    existingUser, err := globalUserStore.FindByEmail(email)
+    existingUser, err = globalUserStore.FindByEmail(email)
     if err != nil {
         return user, err
     } else if existingUser != nil {
-        return existingUser, errEmailExists
+        return user, errEmailExists
     }
 
+    // If input is fine, hashed password and give it a ID.
     hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password),hashCost)
     user.HashedPassword = string(hashedPassword)
 
