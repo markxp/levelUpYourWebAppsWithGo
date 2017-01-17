@@ -4,6 +4,7 @@ import (
     "encoding/json"
     "strings"
     "io/ioutil"
+    "os"
 )
 
 //First step - save to a file with JSON format
@@ -23,6 +24,7 @@ func (f FileUserStore)Save(user User) error {
     if err != nil {
         return err
     }
+    return nil
 }
 
 
@@ -33,20 +35,20 @@ func (f FileUserStore)Save(user User) error {
 func (f FileUserStore) Find(id string) (*User, error){
     user, ok := f.Users[id]
     if ok {
-        return &user, ok
+        return &user, nil
     }
     return nil, nil
 }
 
 func (f FileUserStore) FindByUsername(username string) (*User, error){
-    // why filter empty email string? 
+    // why filter empty username string? 
     if username == "" {
         return nil, nil
     }
 
     for _, v := range f.Users {
         if strings.ToLower(username) == strings.ToLower(v.Username){
-            return &user, nil
+            return &v, nil
         }
     }
     return nil, nil
@@ -60,7 +62,7 @@ func (f FileUserStore) FindByEmail(email string) (*User, error){
 
     for _, v := range f.Users {
         if strings.ToLower(email) == strings.ToLower(v.Email){
-            return &user, nil
+            return &v, nil
         }
     }
     return nil, nil
@@ -82,7 +84,7 @@ func NewFileUserStore(filename string) (*FileUserStore,error){
         return nil, err
     }
     // load file contents and transform into FileUserStore
-    err = json.Unmarshal(contents, f) // strange, why not unmarshal to f.Users??
+    err = json.Unmarshal(contents, f) // strange, why not unmarshal to f.Users
     if err != nil {
         return nil, err
     }
