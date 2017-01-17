@@ -22,6 +22,24 @@ func HandleUserNew(w http.ResponseWriter,
         RenderTemplate(w,r,"user/new",nil)
 }
 
+func HandleUserCreate(w http.ResponseWriter, r *http.Request, _ httprouter.Params){
+    // retrive data from FormValue()
+    user, err := NewUser(r.FormValue("username"), r.FormValue("email"), r.FormValue("password"))
+    if err != nil {
+        if IsValidationError(err){
+            RenderTemplate(w, r, "user/new",map[string]interface{} {
+                    "Error": err.Error(),
+                    "User": user,
+            })
+            return
+        }
+        // panic if bcrypt went wrong
+        panic(err)
+    }
+    http.Redirect(w, r,"/?flash=User+Created", http.StatusFound)
+}
+
+
 func HandleImageNew(w http.ResponseWriter,
     r *http.Request,
     params httprouter.Params){

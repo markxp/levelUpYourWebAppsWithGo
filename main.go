@@ -10,6 +10,7 @@ func main(){
     router := httprouter.New()
     router.Handle("GET","/",HandleHome)
     router.Handle("GET","/register",HandleUserNew)
+    router.Handle("POST","/register",HandleUserCreate)
     router.ServeFiles("/assets/*filepath",http.Dir("assets/"))
 
     middleware := Middleware{}
