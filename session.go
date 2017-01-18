@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"time"
 )
@@ -22,7 +21,7 @@ func NewSession(w http.ResponseWriter) *Session {
 	expiry := time.Now().Add(sessionLength)
 
 	s := &Session{
-		ID:     GenerateID("session", sessionIDLength),
+		ID:     GenerateID("sess", sessionIDLength),
 		Expiry: expiry,
 	}
 

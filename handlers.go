@@ -47,6 +47,13 @@ func HandleUserCreate(w http.ResponseWriter, r *http.Request, _ httprouter.Param
 	session.UserID = user.ID
 	// Debug
 	// log.Printf("session created: %#v", session)
+	err = globalSessionStore.Save(session)
+
+	log.Println(session)
+
+	if err != nil {
+		panic(err)
+	}
 
 	http.Redirect(w, r, "/?flash=User+Created", http.StatusFound)
 }
