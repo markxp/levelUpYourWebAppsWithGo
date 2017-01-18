@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"time"
 )
@@ -13,7 +14,7 @@ type Session struct {
 
 const (
 	sessionLength     = 1 * time.Hour
-	sessionCookieName = "Gopher Session"
+	sessionCookieName = "Gopher_Session" //Do Not use whitespace
 	sessionIDLength   = 20
 )
 
@@ -32,5 +33,7 @@ func NewSession(w http.ResponseWriter) *Session {
 	}
 
 	http.SetCookie(w, &c)
+	// Debug
+	// log.Printf("set cookie: %#v", c)
 	return s
 }
